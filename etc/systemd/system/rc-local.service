@@ -1,0 +1,21 @@
+[Unit]
+Description=/etc/rc.local compatibility
+ConditionPathExists=/etc/rc.local
+# If your commands need the network, use network-online.target
+After=network-online.target
+Wants=network-online.target
+DefaultDependencies=no
+After=basic.target
+Before=multi-user.target
+
+[Service]
+Type=forking
+ExecStart=/etc/rc.local start
+TimeoutSec=0
+RemainAfterExit=yes
+GuessMainPID=no
+# Ensure /etc/rc.local can run as a simple script with "start" arg
+# If you don't care about the arg, it'll just be ignored by /bin/sh.
+
+[Install]
+WantedBy=multi-user.target

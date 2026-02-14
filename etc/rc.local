@@ -1,0 +1,14 @@
+#!/bin/bash
+
+/usr/sbin/modprobe zram
+/usr/sbin/zramctl --reset /dev/zram0
+/usr/sbin/zramctl --find --size 2G
+/usr/sbin/mkswap /dev/zram0
+/usr/sbin/swapon /dev/zram0 --priority 100
+
+/usr/bin/powerprofilesctl set power-saver
+
+echo "rc.local ran at $(date)" >> /var/log/rc.local.log
+
+exit 0
+
